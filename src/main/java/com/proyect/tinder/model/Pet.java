@@ -14,25 +14,25 @@ import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
-@Setter
 @Getter
-@SQLDelete(sql = "UPDATE user SET deleted = true, deleted_at = CURRENT_TIMESTAMP WHERE id=?")
+@Setter
+@SQLDelete(sql = "UPDATE pet SET deleted = true, deleted_at = CURRENT_TIMESTAMP WHERE id=?")
 @Where(clause = "deleted = false")
-public class User {
+public class Pet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
+    private String name;
+    private String sex;
+
 
     private Boolean deleted = Boolean.FALSE;
-    
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime deletedAt;
+
+
 }
