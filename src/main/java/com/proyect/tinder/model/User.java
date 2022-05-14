@@ -28,6 +28,7 @@ public class User {
     private String password;
 
     private Boolean deleted = Boolean.FALSE;
+    
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
