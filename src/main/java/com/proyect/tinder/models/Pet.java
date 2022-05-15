@@ -30,9 +30,8 @@ public class Pet {
     private User user;
 
     private Boolean deleted = Boolean.FALSE;
-    @CreatedDate
+
     private LocalDateTime createdAt;
-    @LastModifiedDate
     private LocalDateTime deletedAt;
 
 

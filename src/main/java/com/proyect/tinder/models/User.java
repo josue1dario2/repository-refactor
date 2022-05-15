@@ -31,8 +31,6 @@ public class User {
     @ManyToOne
     private Zone zone;
     
-    @CreatedDate
     private LocalDateTime createdAt;
-    @LastModifiedDate
     private LocalDateTime deletedAt;
 }
