@@ -1,5 +1,6 @@
 package com.proyect.tinder.model;
 
+import com.proyect.tinder.enumeration.Sex;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
@@ -22,7 +23,8 @@ public class Pet {
     private Long id;
 
     private String name;
-    private String sex;
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
 
     @ManyToOne
     private User user;
