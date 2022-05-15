@@ -1,4 +1,4 @@
-package com.proyect.tinder.model;
+package com.proyect.tinder.models;
 
 import lombok.Getter;
 import lombok.Setter;

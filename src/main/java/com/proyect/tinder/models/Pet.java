@@ -1,36 +1,39 @@
-package com.proyect.tinder.model;
+package com.proyect.tinder.models;
 
+import com.proyect.tinder.enumerations.Sex;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Setter
 @Getter
-@SQLDelete(sql = "UPDATE vote SET deleted = true, deleted_at = CURRENT_TIMESTAMP WHERE id=?")
+@Setter
+@SQLDelete(sql = "UPDATE pet SET deleted = true, deleted_at = CURRENT_TIMESTAMP WHERE id=?")
 @Where(clause = "deleted = false")
-public class Vote {
+public class Pet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime date;
-    private LocalDateTime response;
+    private String name;
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
+
+    @ManyToOne
+    private User user;
 
     private Boolean deleted = Boolean.FALSE;
-
-    @ManyToOne
-    private Pet pet1;
-
-    @ManyToOne
-    private Pet pet2;
-
+    @CreatedDate
+    private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime deletedAt;
+
+
 }
