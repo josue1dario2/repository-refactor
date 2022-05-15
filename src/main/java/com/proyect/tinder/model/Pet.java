@@ -7,10 +7,7 @@ import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -27,6 +24,8 @@ public class Pet {
     private String name;
     private String sex;
 
+    @ManyToOne
+    private User user;
 
     private Boolean deleted = Boolean.FALSE;
     @CreatedDate

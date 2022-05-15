@@ -7,10 +7,7 @@ import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,6 +27,9 @@ public class User {
     private String password;
 
     private Boolean deleted = Boolean.FALSE;
+
+    @ManyToOne
+    private Zone zone;
     
     @CreatedDate
     private LocalDateTime createdAt;
