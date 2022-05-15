@@ -1,5 +1,6 @@
 package com.proyect.tinder.model;
 
+import com.proyect.tinder.enumeration.Sex;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
@@ -7,10 +8,7 @@ import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,7 +23,8 @@ public class Pet {
     private Long id;
 
     private String name;
-    private String sex;
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
 
 
     private Boolean deleted = Boolean.FALSE;
