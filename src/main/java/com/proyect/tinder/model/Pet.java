@@ -26,6 +26,8 @@ public class Pet {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
+    @ManyToOne
+    private User user;
 
     private Boolean deleted = Boolean.FALSE;
     @CreatedDate
