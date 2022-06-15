@@ -1,6 +1,6 @@
-package com.proyect.tinder.repositories;
+package com.proyect.tinder.repository;
 
-import com.proyect.tinder.models.Pet;
+import com.proyect.tinder.model.Pet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

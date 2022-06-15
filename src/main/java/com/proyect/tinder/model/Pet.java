@@ -1,6 +1,6 @@
-package com.proyect.tinder.models;
+package com.proyect.tinder.model;
 
-import com.proyect.tinder.enumerations.Sex;
+import com.proyect.tinder.enums.Sex;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;

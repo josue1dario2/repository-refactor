@@ -1,6 +1,6 @@
-package com.proyect.tinder.repositories;
+package com.proyect.tinder.repository;
 
-import com.proyect.tinder.models.Vote;
+import com.proyect.tinder.model.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
