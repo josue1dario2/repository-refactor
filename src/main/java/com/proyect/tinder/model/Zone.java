@@ -1,4 +1,4 @@
-package com.proyect.tinder.models;
+package com.proyect.tinder.model;
 
 import lombok.*;
 
