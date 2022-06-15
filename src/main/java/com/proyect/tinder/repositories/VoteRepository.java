@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface VoteRepository extends JpaRepository<Vote,Long> {
+public interface VoteRepository extends JpaRepository<Vote,Integer> {
 
-    List<Vote> findByPet1OrderByDateDesc(String id);
+    List<Vote> findByPet1OrderByDateDesc(Integer id);
 
-    List<Vote> findByPet2OrderByDateDesc(String id);
+    List<Vote> findByPet2OrderByDateDesc(Integer id);
 }

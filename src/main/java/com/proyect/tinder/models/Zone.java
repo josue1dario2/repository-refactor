@@ -14,7 +14,7 @@ import javax.persistence.Id;
 public class Zone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer idZone;
 
     private String name;
     private String description;
