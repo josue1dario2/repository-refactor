@@ -18,7 +18,7 @@ public class Vote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer idVote;
 
     private LocalDateTime date;
     private LocalDateTime response;

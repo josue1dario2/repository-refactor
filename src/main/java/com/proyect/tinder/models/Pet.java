@@ -20,7 +20,7 @@ public class Pet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer idPet;
 
     private String name;
     @Enumerated(EnumType.STRING)
