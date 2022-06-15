@@ -1,15 +1,14 @@
 package com.proyect.tinder.services;
 
-import com.proyect.tinder.models.User;
+import com.proyect.tinder.exception.SpringException;
+import com.proyect.tinder.model.Pet;
 
 public interface UserService {
 
-    User saveUser(User user);
+    Pet addPet(Integer idUser,Pet pet)throws SpringException;
 
-    User updateUser(User user ,Long id);
+    Pet updatePet(Integer idUser,Pet pet)throws SpringException;
 
-    void enableUser(Long id);
-
-    void deleteUser(Long id) throws Exception;
+    void deletePet(Integer idUser,Integer idPet)throws SpringException;
 
 }
