@@ -6,6 +6,8 @@ import com.proyect.tinder.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -29,12 +31,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Void enableUser(Long id) {
-        return null;
+    public void enableUser(Long id) {
+
     }
 
     @Override
-    public Void disableUser(Long id) {
-        return null;
+    public void deleteUser(Long id) throws Exception {
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent()){
+            throw new Exception("User not found");
+        }
+        userRepository.delete(user.get());
     }
+
 }

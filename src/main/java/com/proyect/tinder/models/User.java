@@ -30,7 +30,7 @@ public class User {
 
     @ManyToOne
     private Zone zone;
-    
+
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
 }

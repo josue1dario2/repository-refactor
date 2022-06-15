@@ -8,8 +8,8 @@ public interface UserService {
 
     User updateUser(User user ,Long id);
 
-    Void enableUser(Long id);
+    void enableUser(Long id);
 
-    Void disableUser(Long id);
+    void deleteUser(Long id) throws Exception;
 
 }
