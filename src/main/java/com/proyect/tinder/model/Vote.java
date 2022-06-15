@@ -33,6 +33,5 @@ public class Vote {
     @ManyToOne
     private Pet pet2;
 
-    @LastModifiedDate
     private LocalDateTime deletedAt;
 }
