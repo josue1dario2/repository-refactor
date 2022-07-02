@@ -54,4 +54,22 @@ public class VoteServiceImpl implements VoteService {
 
         voteRepository.save(vote);
     }
+
+    @Override
+    public void answerVote(Integer idUser, Integer idVote) throws SpringException {
+
+        Optional<Vote> response = voteRepository.findById(idVote);
+        if(response.isPresent()){
+            Vote vote = response.get();
+            vote.setResponse(LocalDateTime.now());
+
+            if(vote.getPet2().getUser().getIdUser().equals(idUser)){
+                voteRepository.save(vote);
+            }else{
+                throw new SpringException("You do not have permission to perform the operation");
+            }
+        }else{
+            throw new SpringException("The requested vote does not exist");
+        }
+    }
 }
