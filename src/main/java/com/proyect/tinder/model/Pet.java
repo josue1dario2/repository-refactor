@@ -31,6 +31,9 @@ public class Pet {
     @ManyToOne
     private User user;
 
+    @OneToOne
+    private Photo photo;
+
     private Boolean deleted = Boolean.FALSE;
 
     private LocalDateTime createdAt;
