@@ -33,6 +33,9 @@ public class User {
     @ManyToOne
     private Zone zone;
 
+    @OneToOne
+    private Photo photo;
+
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
 }
