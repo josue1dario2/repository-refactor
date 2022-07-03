@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
+
 @Service
 public class PhotoServiceImpl implements PhotoService {
 
@@ -37,6 +39,24 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public Photo updatePhoto(Integer idPhoto, MultipartFile file) throws SpringException {
+        if(file != null){
+            try{
+                Photo photo = new Photo();
+                if(idPhoto != null){
+                    Optional<Photo> response = photoRepository.findById(idPhoto);
+                    if(response.isEmpty()){
+                        photo = response.get();
+                    }
+                }
+                photo.setMime(file.getContentType());
+                photo.setName(file.getName());
+                photo.setContent(file.getBytes());
+
+                return photoRepository.save(photo);
+            }catch (Exception e){
+                System.err.println(e.getMessage());
+            }
+        }
         return null;
     }
 }
