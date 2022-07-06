@@ -51,11 +51,22 @@ public class PetServiceImpl implements PetService {
     @Override
     public Pet updatePet(MultipartFile file,Integer idUser, Pet pet) throws SpringException {
         Optional<Pet> response = petRepository.findById(pet.getIdPet());
+
         if(response.isPresent()){
             Pet pet1 = response.get();
+            
             if(pet1.getUser().getIdUser().equals(idUser)){
                 pet1.setName(pet.getName());
                 pet1.setSex(pet.getSex());
+
+                Integer idPhoto = null;
+                if(pet1.getPhoto() != null){
+                    idPhoto = pet1.getPhoto().getIdPhoto();
+                }
+
+                Photo photo = photoService.updatePhoto(idPhoto,file);
+                pet1.setPhoto(photo);
+
                 return petRepository.save(pet1);
             }else {
                 throw new SpringException("You do not have permissions to perform the operation");
