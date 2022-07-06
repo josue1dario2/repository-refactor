@@ -45,6 +45,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(MultipartFile file, Integer idUser, User userEntity) throws SpringException {
-        return null;
+
+        Optional<User> response = userRepository.findById(idUser);
+
+        if(response.isPresent()){
+            User user = response.get();
+            user.setFirstName(userEntity.getFirstName());
+            user.setLastName(userEntity.getLastName());
+            user.setEmail(userEntity.getEmail());
+            user.setPassword(userEntity.getPassword());
+
+            Integer idPhoto = null;
+            if(user.getPhoto() != null){
+                idPhoto = user.getPhoto().getIdPhoto();
+            }
+            Photo photo = photoService.updatePhoto(idPhoto,file);
+            user.setPhoto(photo);
+
+            return userRepository.save(user);
+
+        }else{
+            throw new SpringException("The requested user was not found");
+        }
+
     }
 }
