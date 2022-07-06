@@ -8,6 +8,7 @@ import com.proyect.tinder.repository.UserRepository;
 import com.proyect.tinder.services.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
