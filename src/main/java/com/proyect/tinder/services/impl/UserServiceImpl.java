@@ -2,66 +2,71 @@ package com.proyect.tinder.services.impl;
 
 import com.proyect.tinder.exception.SpringException;
 import com.proyect.tinder.model.Pet;
+import com.proyect.tinder.model.Photo;
 import com.proyect.tinder.model.User;
 import com.proyect.tinder.repository.PetRepository;
 import com.proyect.tinder.repository.UserRepository;
 import com.proyect.tinder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PetRepository petRepository;
+    private final PhotoServiceImpl photoService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository,PetRepository petRepository){
-        this.userRepository =  userRepository;
-        this.petRepository = petRepository;
+    public UserServiceImpl(UserRepository userRepository,PhotoServiceImpl photoService){
+        this.userRepository = userRepository;
+        this.photoService = photoService;
     }
 
     @Override
-    public Pet addPet(Integer idUser, Pet pet) throws SpringException {
+    public User registerUser(MultipartFile file, User userEntity) throws SpringException {
 
-        Optional<User> user = userRepository.findById(idUser);
-        if(!user.isPresent()){
-            throw new SpringException("User not exists");
-        }
-        pet.setUser(user.get());
-        return petRepository.save(pet);
+        User user = new User();
+
+        user.setFirstName(userEntity.getFirstName());
+        user.setLastName(userEntity.getLastName());
+        user.setEmail(userEntity.getEmail());
+        user.setPassword(userEntity.getPassword());
+        user.setCreatedAt(LocalDateTime.now());
+
+        Photo photo = photoService.savePhoto(file);
+        user.setPhoto(photo);
+
+        return userRepository.save(user);
     }
 
     @Override
-    public Pet updatePet(Integer idUser, Pet pet) throws SpringException {
-        Optional<Pet> response = petRepository.findById(pet.getIdPet());
+    public User updateUser(MultipartFile file, Integer idUser, User userEntity) throws SpringException {
+
+        Optional<User> response = userRepository.findById(idUser);
+
         if(response.isPresent()){
-            Pet pet1 = response.get();
-            if(pet1.getUser().getIdUser().equals(idUser)){
-                pet1.setName(pet.getName());
-                pet1.setSex(pet.getSex());
-                return petRepository.save(pet1);
-            }else {
-                throw new SpringException("You do not have permissions to perform the operation");
+            User user = response.get();
+            user.setFirstName(userEntity.getFirstName());
+            user.setLastName(userEntity.getLastName());
+            user.setEmail(userEntity.getEmail());
+            user.setPassword(userEntity.getPassword());
+
+            Integer idPhoto = null;
+            if(user.getPhoto() != null){
+                idPhoto = user.getPhoto().getIdPhoto();
             }
-        }else {
-            throw new SpringException("There is no pet with the requested id");
+            Photo photo = photoService.updatePhoto(idPhoto,file);
+            user.setPhoto(photo);
+
+            return userRepository.save(user);
+
+        }else{
+            throw new SpringException("The requested user was not found");
         }
 
-    }
-
-    @Override
-    public void deletePet(Integer idUser, Integer idPet) throws SpringException {
-        Optional<Pet> response = petRepository.findById(idPet);
-        if(response.isPresent()){
-            Pet pet = response.get();
-            if(pet.getUser().getIdUser().equals(idUser)){
-                pet.setDeleted(true);
-            }
-        }else {
-            throw new SpringException("There is no pet with the requested id");
-        }
     }
 }

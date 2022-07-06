@@ -2,13 +2,13 @@ package com.proyect.tinder.services;
 
 import com.proyect.tinder.exception.SpringException;
 import com.proyect.tinder.model.Pet;
+import com.proyect.tinder.model.User;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
-    Pet addPet(Integer idUser,Pet pet)throws SpringException;
+    User registerUser(MultipartFile file,User user) throws SpringException;
 
-    Pet updatePet(Integer idUser,Pet pet)throws SpringException;
-
-    void deletePet(Integer idUser,Integer idPet)throws SpringException;
+    User updateUser(MultipartFile file,Integer idUser,User user) throws SpringException;
 
 }
