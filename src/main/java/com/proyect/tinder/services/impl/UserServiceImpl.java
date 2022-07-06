@@ -8,6 +8,7 @@ import com.proyect.tinder.repository.UserRepository;
 import com.proyect.tinder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Pet addPet(Integer idUser, Pet pet) throws SpringException {
+    public Pet addPet(Integer idUser, MultipartFile file, Pet pet) throws SpringException {
 
         Optional<User> user = userRepository.findById(idUser);
         if(!user.isPresent()){
