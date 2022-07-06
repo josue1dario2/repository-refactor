@@ -2,6 +2,7 @@ package com.proyect.tinder.services.impl;
 
 import com.proyect.tinder.exception.SpringException;
 import com.proyect.tinder.model.Pet;
+import com.proyect.tinder.model.Photo;
 import com.proyect.tinder.model.User;
 import com.proyect.tinder.repository.PetRepository;
 import com.proyect.tinder.repository.UserRepository;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -17,26 +20,36 @@ public class PetServiceImpl implements PetService {
 
     private final UserRepository userRepository;
     private final PetRepository petRepository;
+    private final PhotoServiceImpl photoService;
 
     @Autowired
-    public PetServiceImpl(UserRepository userRepository,PetRepository petRepository){
+    public PetServiceImpl(UserRepository userRepository,PetRepository petRepository,PhotoServiceImpl photoService){
         this.userRepository =  userRepository;
         this.petRepository = petRepository;
+        this.photoService = photoService;
     }
 
     @Override
-    public Pet addPet(Integer idUser, Pet pet) throws SpringException {
+    public Pet addPet(MultipartFile file,Integer idUser, Pet pet) throws SpringException {
 
         Optional<User> user = userRepository.findById(idUser);
         if(!user.isPresent()){
             throw new SpringException("User not exists");
         }
-        pet.setUser(user.get());
-        return petRepository.save(pet);
+        Pet pet1 = new Pet();
+        pet1.setName(pet.getName());
+        pet1.setSex(pet.getSex());
+        pet1.setCreatedAt(LocalDateTime.now());
+        pet1.setUser(user.get());
+
+        Photo photo = photoService.savePhoto(file);
+        pet1.setPhoto(photo);
+
+        return petRepository.save(pet1);
     }
 
     @Override
-    public Pet updatePet(Integer idUser, Pet pet) throws SpringException {
+    public Pet updatePet(MultipartFile file,Integer idUser, Pet pet) throws SpringException {
         Optional<Pet> response = petRepository.findById(pet.getIdPet());
         if(response.isPresent()){
             Pet pet1 = response.get();
