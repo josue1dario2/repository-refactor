@@ -8,14 +8,22 @@ import com.proyect.tinder.repository.PetRepository;
 import com.proyect.tinder.repository.UserRepository;
 import com.proyect.tinder.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final PhotoServiceImpl photoService;
@@ -68,5 +76,28 @@ public class UserServiceImpl implements UserService {
             throw new SpringException("The requested user was not found");
         }
 
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+
+        User user = userRepository.findByEmail(mail);
+
+        if(user != null){
+            List<GrantedAuthority> permissions = new ArrayList<>();
+
+            GrantedAuthority p1 = new SimpleGrantedAuthority("MODULE_PHOTO");
+            GrantedAuthority p2 = new SimpleGrantedAuthority("MODULE_PET");
+            GrantedAuthority p3 = new SimpleGrantedAuthority("MODULE_VOTE");
+
+            permissions.add(p1);
+            permissions.add(p2);
+            permissions.add(p3);
+
+            org.springframework.security.core.userdetails.User user1 =
+                    new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),permissions);
+            return user1;
+        }
+        return null;
     }
 }
