@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,7 +43,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setFirstName(userEntity.getFirstName());
         user.setLastName(userEntity.getLastName());
         user.setEmail(userEntity.getEmail());
-        user.setPassword(userEntity.getPassword());
+
+        String passwordEncoder = new BCryptPasswordEncoder().encode(user.getPassword());
+        user.setPassword(passwordEncoder);
         user.setCreatedAt(LocalDateTime.now());
 
         Photo photo = photoService.savePhoto(file);
@@ -61,8 +64,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             user.setFirstName(userEntity.getFirstName());
             user.setLastName(userEntity.getLastName());
             user.setEmail(userEntity.getEmail());
-            user.setPassword(userEntity.getPassword());
 
+            String passwordEncoder = new BCryptPasswordEncoder().encode(user.getPassword());
+            user.setPassword(passwordEncoder);
             Integer idPhoto = null;
             if(user.getPhoto() != null){
                 idPhoto = user.getPhoto().getIdPhoto();
