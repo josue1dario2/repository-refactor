@@ -64,8 +64,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             user.setFirstName(userEntity.getFirstName());
             user.setLastName(userEntity.getLastName());
             user.setEmail(userEntity.getEmail());
-            user.setPassword(userEntity.getPassword());
 
+            String passwordEncoder = new BCryptPasswordEncoder().encode(user.getPassword());
+            user.setPassword(passwordEncoder);
             Integer idPhoto = null;
             if(user.getPhoto() != null){
                 idPhoto = user.getPhoto().getIdPhoto();
