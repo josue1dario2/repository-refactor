@@ -1,7 +1,6 @@
 package com.proyect.tinder.services;
 
 import com.proyect.tinder.exception.SpringException;
-import com.proyect.tinder.model.Pet;
 import com.proyect.tinder.model.User;
 import org.springframework.web.multipart.MultipartFile;
 
