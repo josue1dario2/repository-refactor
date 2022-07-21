@@ -7,11 +7,11 @@ import com.proyect.tinder.repository.PetRepository;
 import com.proyect.tinder.repository.VoteRepository;
 import com.proyect.tinder.services.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.Optional;
-
+@Service
 public class VoteServiceImpl implements VoteService {
 
     private final PetRepository petRepository;

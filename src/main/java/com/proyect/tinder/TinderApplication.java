@@ -12,8 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 public class TinderApplication extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserServiceImpl userService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(TinderApplication.class, args);
